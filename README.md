@@ -1,2 +1,2 @@
 # Pneumonia X-ray Classification
-Multi-class classification of **normal**, **bacterial** and **viral** *pneumonia-affected* lungs with pre-trained convolutional neural networks from TensorFlow 2.0.
+Multi-class classification of **normal**, **bacterial** and **viral** *pneumonia-affected* lungs with pre-trained convolutional neural networks from TensorFlow.
