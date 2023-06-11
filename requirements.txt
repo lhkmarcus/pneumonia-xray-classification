@@ -1,4 +1,5 @@
-tensorflow-macos  
+matplotlib
+split-folders
+tensorflow-macos
 tensorflow-metal
-
--e .
+# -e .
