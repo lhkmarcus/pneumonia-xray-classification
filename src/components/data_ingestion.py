@@ -13,7 +13,7 @@ from dataclasses import dataclass
 def create_datasets(image_dir=None, split=0.2, subset="both"):
     CLS_NAMES = ["normal", "bacteria", "virus"]
     BATCH_SIZE = 32
-    IMG_SIZE = (160, 160)
+    IMG_SIZE = (224, 224)
     return tf.keras.utils.image_dataset_from_directory(
         directory=image_dir, 
         label_mode="int",
