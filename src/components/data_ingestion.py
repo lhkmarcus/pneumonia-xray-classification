@@ -62,5 +62,4 @@ class DataIngestion:
 
 
 if __name__ == "__main__":
-    ingest_obj = DataIngestion()
-    ingest_obj.inititate_data_ingestion()
+    DataIngestion().inititate_data_ingestion()
