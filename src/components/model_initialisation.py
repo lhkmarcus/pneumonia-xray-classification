@@ -11,15 +11,17 @@ from src.exceptions import CustomException
 class PretrainedDenseNet:
     def __init__(self):
         super().__init__()
-        self.IMG_SIZE = (224, 224)
-        self.IMG_SHAPE = self.IMG_SIZE + (3,)
-        self.BASE_LR = 0.0001
+        self.img_size = (224, 224)
+        self.img_shape = self.img_size + (3,)
+        self.base_lr = 0.0001
+        self.dropout = 0.2
+        self.num_class = 3
 
     def create_base_model(self):
         logging.info("Started model initialisation component.")
         try:
             self.base_model = tf.keras.applications.densenet.DenseNet169(
-                input_shape=self.IMG_SHAPE,
+                input_shape=self.img_shape,
                 include_top=False,
                 weights="imagenet")
             logging.info("Instantiated base model.")
@@ -32,24 +34,19 @@ class PretrainedDenseNet:
 
     def build_model(self):
         try:
-            preprocess_input = tf.keras.applications.densenet.preprocess_input
+            inputs = tf.keras.Input(shape=self.img_shape)
 
-            global_avg_layer = tf.keras.layers.GlobalAveragePooling2D()
-            clf_layer = tf.keras.layers.Dense(3, activation="softmax")
-
-            inputs = tf.keras.Input(shape=self.IMG_SHAPE)
-
-            x = preprocess_input(inputs)
+            x = tf.keras.applications.densenet.preprocess_input(inputs)
             logging.info("Instantiated DenseNet preprocessing layer.")
 
             x = self.base_model(x, training=False)
-            x = global_avg_layer(x)
+            x = tf.keras.layers.GlobalAveragePooling2D()(x)
             logging.info("Instantiated global averaging layer.")
             
-            x = tf.keras.layers.Dropout(0.2)(x)
-            logging.info("Instantiated dropout layer with 0.2 rate.")
+            x = tf.keras.layers.Dropout(self.dropout)(x)
+            logging.info("Instantiated dropout layer.")
 
-            outputs = clf_layer(x)
+            outputs = tf.keras.layers.Dense(self.num_class, activation="softmax")(x)
             logging.info("Instantiated final three-node dense layer with softmax activation.")
 
             self.model = tf.keras.Model(inputs, outputs)
@@ -61,7 +58,7 @@ class PretrainedDenseNet:
     def compile_model(self):
         try:
             self.model.compile(
-                optimizer=tf.keras.optimizers.Adam(learning_rate=self.BASE_LR),
+                optimizer=tf.keras.optimizers.Adam(learning_rate=self.base_lr),
                 loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                 metrics=["accuracy"])
             logging.info("Compiled model.")
