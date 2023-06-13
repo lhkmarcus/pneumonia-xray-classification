@@ -4,9 +4,6 @@ import sys
 import shutil
 import splitfolders
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Suppress TF warnings
-import tensorflow as tf
-
 from src.logger import logging
 from src.exceptions import CustomException
 
