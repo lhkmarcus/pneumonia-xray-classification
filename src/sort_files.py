@@ -7,6 +7,7 @@ import splitfolders
 from src.logger import logging
 from src.exceptions import CustomException
 
+
 class ImageSorter:
     def __init__(self, image_dir):
         self.image_dir = image_dir
@@ -67,6 +68,7 @@ class ImageSorter:
         self.extract_images()
         self.sort_images()
         self.split_files()
+
 
 if __name__ == "__main__":
     ImageSorter(image_dir="./chest_xray").initiate_image_sorting()

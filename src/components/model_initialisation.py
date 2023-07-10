@@ -16,14 +16,16 @@ class PretrainedDenseNet:
         self.base_lr = 0.0001
         self.dropout = 0.2
         self.num_class = 3
+        self.augment_layer = tf.keras.Sequential([
+            tf.keras.layers.RandomContrast(factor=0.2, seed=42),
+            tf.keras.layers.RandomBrightness(factor=0.2, seed=42),
+            tf.keras.layers.RandomRotation(factor=0.1, seed=42)])
 
     def create_base_model(self):
         logging.info("Started model initialisation component.")
         try:
             self.base_model = tf.keras.applications.densenet.DenseNet169(
-                input_shape=self.img_shape,
-                include_top=False,
-                weights="imagenet")
+                input_shape=self.img_shape, include_top=False, weights="imagenet")
             logging.info("Instantiated base model.")
             
             self.base_model.trainable = False
@@ -35,8 +37,12 @@ class PretrainedDenseNet:
     def build_model(self):
         try:
             inputs = tf.keras.Input(shape=self.img_shape)
+            logging.info("Instantiated inputs.")
+            
+            x = self.augment_layer(inputs)
+            logging.info("Instantiated data augmentation layer.")
 
-            x = tf.keras.applications.densenet.preprocess_input(inputs)
+            x = tf.keras.applications.densenet.preprocess_input(x)
             logging.info("Instantiated DenseNet preprocessing layer.")
 
             x = self.base_model(x, training=False)

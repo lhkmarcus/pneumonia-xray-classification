@@ -1,4 +1,5 @@
 matplotlib
+scikit-learn
 split-folders
 tensorflow-macos
 tensorflow-metal

@@ -41,10 +41,7 @@ class DataIngestion:
         try:
             train_ds, valid_ds = create_datasets(self.ingestion_config.train_path)
             test_ds = create_datasets(
-                image_dir=self.ingestion_config.test_path, 
-                split=None, 
-                subset=None
-            )
+                image_dir=self.ingestion_config.test_path, split=None, subset=None)
             logging.info("Loaded training and validation data as TensorFlow Datasets.")
 
             AUTOTUNE = tf.data.AUTOTUNE
@@ -57,7 +54,7 @@ class DataIngestion:
             logging.info("Exited data ingestion component.")
             return (train_ds, valid_ds, test_ds)
 
-        except Exception as e:
+        except Exception as e: 
             raise CustomException(e, sys)
 
 
