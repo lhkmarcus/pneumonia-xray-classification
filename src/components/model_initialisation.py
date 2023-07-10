@@ -69,7 +69,7 @@ class PretrainedDenseNet:
                 metrics=["accuracy"])
             logging.info("Compiled model.")
 
-            logging.info("Exited pretrained model initialisation component.")
+            logging.info("Exited model initialisation component.")
             return self.model
             
         except Exception as e:
@@ -82,4 +82,5 @@ class PretrainedDenseNet:
 
 
 if __name__ == "__main__":
+    logging.info("MODEL INITIALISATION TEST.")
     model = PretrainedDenseNet().initialise_model()
