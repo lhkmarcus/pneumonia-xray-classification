@@ -1,20 +1,20 @@
 import os
 import sys
 
-from src.exceptions import CustomException
 from src.logger import logging
+from src.exceptions import CustomException
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress tf messages
 import tensorflow as tf
 
 from dataclasses import dataclass
+from src.utils.create_datasets import create_datasets
 
-from src.utils import create_datasets
 
 @dataclass
 class DataIngestionConfig:
-    train_path: str = os.path.join("images", "train")
-    test_path: str = os.path.join("images", "test")
+    train_path: str = os.path.join("artifacts", "train")
+    test_path: str = os.path.join("artifacts", "test")
 
 class DataIngestion:
     def __init__(self):
@@ -42,5 +42,7 @@ class DataIngestion:
             raise CustomException(e, sys)
 
 
+# Test data ingestion component:
 if __name__ == "__main__":
+    logging.info("DATA INGESTION TEST.")
     DataIngestion().inititate_data_ingestion()

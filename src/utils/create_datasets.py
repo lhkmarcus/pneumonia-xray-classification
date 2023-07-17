@@ -3,6 +3,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress tf messages
 import tensorflow as tf
 
+
 def create_datasets(image_dir=None, split=0.2, subset="both"):
     CLS_NAMES = ["normal", "bacteria", "virus"]
     BATCH_SIZE = 32

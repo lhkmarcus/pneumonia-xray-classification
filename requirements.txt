@@ -1,6 +1,5 @@
 matplotlib
 scikit-learn
 split-folders
-tensorflow-macos
-tensorflow-metal
-# -e .
+tensorflow<2.11
+-e .
