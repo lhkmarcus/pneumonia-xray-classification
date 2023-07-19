@@ -2,4 +2,5 @@ matplotlib
 scikit-learn
 split-folders
 tensorflow<2.11
+wandb
 -e .

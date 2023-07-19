@@ -21,21 +21,23 @@ class DataIngestion:
         self.ingestion_config = DataIngestionConfig()
 
     def inititate_data_ingestion(self):
-        logging.info("Started data ingestion component.")
+        logging.info("[BEGIN] Data Ingestion Component.")
         try:
             train_ds, valid_ds = create_datasets(self.ingestion_config.train_path)
             test_ds = create_datasets(
                 image_dir=self.ingestion_config.test_path, split=None, subset=None)
-            logging.info("Loaded training and validation data as TensorFlow Datasets.")
+            logging.info("Loaded training and validation data.")
 
             AUTOTUNE = tf.data.AUTOTUNE
 
             train_ds = train_ds.prefetch(buffer_size=AUTOTUNE)
             valid_ds = valid_ds.prefetch(buffer_size=AUTOTUNE)
             test_ds = test_ds.prefetch(buffer_size=AUTOTUNE)
-            logging.info("Buffered prefetching configured for datasets.")
+            logging.info("Configured prefetch buffer for datasets.")
 
-            logging.info("Exited data ingestion component.")
+            logging.info("[EXIT] Data Ingestion Component.")
+            
+            logging.info("Data ingestion successful.")
             return (train_ds, valid_ds, test_ds)
 
         except Exception as e: 
@@ -44,5 +46,5 @@ class DataIngestion:
 
 # Test data ingestion component:
 if __name__ == "__main__":
-    logging.info("DATA INGESTION TEST.")
+    logging.info("Data ingestion test.")
     DataIngestion().inititate_data_ingestion()

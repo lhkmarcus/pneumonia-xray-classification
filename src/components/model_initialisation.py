@@ -22,7 +22,7 @@ class PretrainedDenseNet:
             tf.keras.layers.RandomRotation(factor=0.1, seed=42)])
 
     def create_base_model(self):
-        logging.info("Started model initialisation component.")
+        logging.info("[BEGIN] Base Model Initialisation")
         try:
             self.base_model = tf.keras.applications.densenet.DenseNet169(
                 input_shape=self.img_shape, include_top=False, weights="imagenet")
@@ -30,11 +30,14 @@ class PretrainedDenseNet:
             
             self.base_model.trainable = False
             logging.info("Froze base model trainable parameters.")
+            logging.info("Base model initialisation successful.")
+            logging.info("[OUT] Base Model Initialisation")
         
         except Exception as e:
             raise CustomException(e, sys)
 
     def build_model(self):
+        logging.info("[ENTER] Network Build Component")
         try:
             inputs = tf.keras.Input(shape=self.img_shape)
             logging.info("Instantiated inputs.")
@@ -53,23 +56,25 @@ class PretrainedDenseNet:
             logging.info("Instantiated dropout layer.")
 
             outputs = tf.keras.layers.Dense(self.num_class, activation="softmax")(x)
-            logging.info("Instantiated final three-node dense layer with softmax activation.")
+            logging.info("Instantiated final classification (Dense) layer.")
 
             self.model = tf.keras.Model(inputs, outputs)
-            logging.info("Finished pretrained model build.")
+            logging.info("Pretrained model build successful.")
+            logging.info("[EXIT] Network Build Component")
         
         except Exception as e:
             raise CustomException(e, sys)
         
     def compile_model(self):
+        logging.info("[BEGIN] Model Compilation")
         try:
             self.model.compile(
                 optimizer=tf.keras.optimizers.Adam(learning_rate=self.base_lr),
                 loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                 metrics=["accuracy"])
-            logging.info("Compiled model.")
+            logging.info("Model compilation successful.")
 
-            logging.info("Exited model initialisation component.")
+            logging.info("[EXIT] Model Compilation.")
             return self.model
             
         except Exception as e:
@@ -79,8 +84,9 @@ class PretrainedDenseNet:
         self.create_base_model()
         self.build_model()
         self.compile_model()
+        logging.info("Model initialisation successful.")
 
 
 if __name__ == "__main__":
-    logging.info("MODEL INITIALISATION TEST.")
+    logging.info("Model initialisation test.")
     model = PretrainedDenseNet().initialise_model()
