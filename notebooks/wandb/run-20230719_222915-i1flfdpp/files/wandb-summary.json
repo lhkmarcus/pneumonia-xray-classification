@@ -1,0 +1,1 @@
+{"mcc": 0.6419879794120789, "fmeasure": 0.755739688873291, "_timestamp": 1689777972.1295655, "_runtime": 1016.2225663661957, "_step": 19, "epoch/loss": 0.587603747844696, "epoch/accuracy": 0.7636072635650635, "epoch/val_loss": 0.5774481892585754, "epoch/val_accuracy": 0.7735042572021484, "epoch/epoch": 9, "epoch/learning_rate": 9.999999747378752e-05, "_wandb": {"runtime": 811}}
