@@ -52,10 +52,10 @@ class ImageSorter:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def split_files(self):
+    def split_files(self, output="./artifacts"):
         try:
             splitfolders.ratio(
-                self.image_dir, output="./artifacts", seed=42, ratio=(.8, .2), move=True)
+                self.image_dir, output=output, seed=42, ratio=(.8, .2), move=True)
             logging.info("Split files into training and testing sets.")
 
             for folder in ("bacteria", "normal", "virus"):
@@ -64,10 +64,10 @@ class ImageSorter:
         except Exception as e:
             raise CustomException(e, sys)
         
-    def initiate_image_sorting(self):
+    def initiate_image_sorting(self, output):
         self.extract_images()
         self.sort_images()
-        self.split_files()
+        self.split_files(output=output)
 
 
 if __name__ == "__main__":

@@ -160,6 +160,7 @@ cython_debug/
 #.idea/
 
 /artifacts
+/enhanced
 /images
 /chest_xray
 wandb/
