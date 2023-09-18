@@ -4,4 +4,6 @@ split-folders
 tensorflow<2.11
 opencv-python
 wandb
+pydot
+plot_model
 -e .
